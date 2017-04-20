@@ -1,2 +1,2 @@
-# LSA
-Basic Latent Sementic Analysis
+ # LSA
+Basic latent semantic analysis using delicious.com dataset
