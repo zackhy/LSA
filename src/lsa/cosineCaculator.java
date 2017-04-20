@@ -80,7 +80,7 @@ public class cosineCaculator {
 		return ct;
 	}
 	
-	//内部方法，计算cosine
+	// Calculate cosine
 	private double cosine(double[] a, double[] b){
 		double ma = 0;
 		double mb = 0;
@@ -101,15 +101,4 @@ public class cosineCaculator {
 		}
 		return Math.abs(cosine);
 	}
-	
-	//测试方法
-//	public static void main(String[] args) throws Exception{
-//		File file = new File("data/total_tags.txt");
-//		File file1 = new File("data/resources_tags.txt");
-//		TXTFileUtil tfu = new TXTFileUtil("data/test1.xls");
-//		String s = tfu.readTxtFile(file);
-//		String s1 = tfu.readTxtFile(file1);
-//		cosineCaculator cc = new cosineCaculator("data/test1.xls", s, s1);
-//		double[][] ct = cc.cosineTag();
-//	}
 }

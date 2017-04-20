@@ -24,7 +24,7 @@ public class FreqCaculator {
 		return words;
 	}
 	
-	//文档分词
+	// Word segmentation
 	public String[] words(String s){
 		
 		String[] words = splitWord(s);
@@ -54,7 +54,7 @@ public class FreqCaculator {
 		return words;
 	}
 	
-	//计算总词频
+	// Calculate word frequency
 	public Map<String, Integer> countTotalWords(String s){
 		String[] words = splitWord(s);
 		Set<String> set = new TreeSet<String>();
@@ -67,9 +67,8 @@ public class FreqCaculator {
 		ArrayList<Integer> freqList = new ArrayList<Integer>();
 		
 		System.out.println();
-		System.out.println("***开始计算总词频***");
+		System.out.println("***Calculation begin***");
 		
-		//开始计算总词频
 		while(it.hasNext()){
 			String word = (String)it.next();
 			int count = 0;
@@ -92,12 +91,12 @@ public class FreqCaculator {
 		for(int k = 0; k < words.length; k++){
 			wordFreqs.put(words[k], wf[k]);
 		}
-		System.out.println("***总词频计算成功***");
+		System.out.println("***Calculation successes***");
 		System.out.println();
 		return wordFreqs;
 	}
 	
-	//计算资源或用户所拥有的标签数量
+	// Calculate total tags by resource id or user id
 	public int[] countIDTags(String s){
 		String[] s1 = s.split("\\r?\\n");
 		int[] cit = new int[s1.length/2];
@@ -116,22 +115,16 @@ public class FreqCaculator {
 		return cit;
 	}
 	
-	//按资源id或用户id计算词频
+	// Calculate word frequency by resource id or user id, return document-term matrix
 	public int[][] countIdWords(String[] words, String s){
 		String[] s1 = s.split("\\r?\\n");
-		//行数为标签数量，列数为资源或用户数量
+		
 		int[][] idWordFreqs = new int[words.length][s1.length/2];
 		String[] tempstr = null;
 		int[] tempfreq = new int[words.length];
 		int n = 0;
-		System.out.println("***开始构建以词频为元素的词-文本矩阵***");
+		System.out.println("***Building document-term matrix***");
 		for(int i = 0; i <= (s1.length/2); i ++){
-			/**
-			 * 偶数时统计词频并初始化词-文本矩阵
-			 * 奇数时计算列值
-			 * i为偶数时读入标签，i为奇数时读入资源或用户id
-			 * 此时元素仅为词频
-			 */
 			if((i%2) != 0){
 				for(int j = 0; j < words.length; j++){
 					tempfreq[j] = 0;
@@ -151,26 +144,8 @@ public class FreqCaculator {
 				n++;
 			}
 		}
-		System.out.println("***构建以词频为元素的词-文本矩阵成功***");
+		System.out.println("***Document-term matrix created***");
 		System.out.println();
 		return idWordFreqs;
 	}
-	
-	//测试以上方法
-//	public static void main(String args[]) throws Exception{
-//		FreqCaculator fc = new FreqCaculator("data/test1.xls");
-//		File file = new File("data/total_tags.txt");
-//		File file1 = new File("data/resources_tags.txt");
-//		String s = fc.tfu.readTxtFile(file);
-//		String s1 = fc.tfu.readTxtFile(file1);
-//		Map<String, Integer> wf = fc.countTotalWords(s);
-//		String[] words = fc.words(s);
-//		int[][] idWordFreqs = fc.countIdWords(words, s1);
-////		for(int i = 0; i < words.length; i++){
-////			if(words[i].equals("design")){
-////				System.out.println(i);
-////			}
-////		}
-//		System.out.println(words[5]);
-//	}
 }

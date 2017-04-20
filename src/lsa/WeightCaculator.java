@@ -21,10 +21,6 @@ public class WeightCaculator {
 		tic = fc.countIDTags(s1);
 	}
 	
-	/**
-	 * 计算标签局部权重,公式为:
-	 * Wp(i,j) = log2(Freq(i,j) + 1)
-	 */
 	public double[][] partialWeight(){
 		int n;
 		double[][] pw = new double[idWordFreqs.length][idWordFreqs[0].length];
@@ -36,15 +32,11 @@ public class WeightCaculator {
 		return pw;
 	}
 	
-	/**
-	 * 计算标签全局权重
-	 * 公式复杂，不在此指出
-	 */
 	public double[] tagWeight(){
 		int tfreq;
 		double[] tw = new double[words.length];
 		for(int i = 0; i < words.length; i++){
-			tfreq = wordFreqs.get(words[i]);  //取出标签i的总词频
+			tfreq = wordFreqs.get(words[i]);  
 			double w = 0;
 			double w1 = 0;
 			double w2 = 0;
@@ -63,15 +55,11 @@ public class WeightCaculator {
 		return tw;
 	}
 	
-	/**
-	 * 计算资源或用户（以doc指代）全局权重
-	 * 公式复杂，不在此指出
-	 */
 	public double[] docWeight(){
 		int docfreq;
 		double[] dw = new double[idWordFreqs[0].length];
 		for(int i = 0; i < idWordFreqs[0].length; i++){
-			docfreq = tic[i];  //取出标签i的总词频
+			docfreq = tic[i];
 			double w = 0;
 			double w1 = 0;
 			double w2 = 0;
@@ -90,14 +78,10 @@ public class WeightCaculator {
 		return dw;
 	}
 	
-	/**
-	 * 计算权重，公式为：
-	 * Wg(i,j) = Wp(i,j) * Wt(i) * Wd(j)
-	 * 并得到词-文本矩阵，此矩阵元素为经过改良后的权重
-	 */
+	// Wg(i,j) = Wp(i,j) * Wt(i) * Wd(j)
 	public double[][] globalWeight(double[][] pw, double[] tw, double[] dw){
 		double[][] gw = new double[idWordFreqs.length][idWordFreqs[0].length];
-		System.out.println("***开始生成以权重为元素的词-文本矩阵***");
+		System.out.println("***Building weighted document-term matrix***");
 		for(int i = 0; i < idWordFreqs.length; i++){
 			for(int j = 0; j < idWordFreqs[0].length; j++){
 				double temp = 0;
@@ -105,32 +89,14 @@ public class WeightCaculator {
 				gw[i][j] = temp;
 			}
 		}
-		System.out.println("***生成以权重为元素的词-文本矩阵成功***");
+		System.out.println("***Weighted document-term matrix built***");
 		System.out.println();
 		return gw;
 	}
 	
-	//内部方法，计算log值
+	// log
 	private double log(double value, double base){
 		return Math.log(value)/Math.log(base);
 	}
-	
-//	测试以上方法
-//	public static void main(String[] args) throws Exception{
-//		File file = new File("data/total_tags.txt");
-//		File file1 = new File("data/resources_tags.txt");
-//		TXTFileUtil tfu = new TXTFileUtil("data/test1.xls");
-//		String s = tfu.readTxtFile(file);
-//		String s1 = tfu.readTxtFile(file1);
-//		WeightCaculator wc = new WeightCaculator("data/test1.xls", s, s1);
-//		double[][] pw = wc.partialWeight();
-//		double[] tw = wc.tagWeight();
-//		double[] dw = wc.docWeight();
-//		double[][] gw = wc.globalWeight(pw, tw, dw);
-//		for(int i = 0; i < gw.length; i++){
-//			System.out.println(gw[216][8]);
-//		}
-//		
-//	}
 
 }

@@ -27,7 +27,7 @@ public class main {
 		cosineCaculator cc = new cosineCaculator("data/test1.xls", s, s1);
 		double[][] ct = cc.cosineTag();
 //		System.out.println(ct[553][216]);
-		System.out.println("输入想要导航的标签：");
+		System.out.println("Please enter your tag: ");
 		Scanner scan = new Scanner(System.in);
 		String read = scan.nextLine();
 		double[][] cr = sd.gw;
@@ -39,21 +39,21 @@ public class main {
 				i += 1;
 			}
 		}
-		System.out.println("相关标签包括:");
+		System.out.println("Related tags:");
 		for(int i = 0; i < ct.length; i++){
 			if(ct[k][i] > 0.7){
 				System.out.print(words[i] + " ");
 			}
 		}
 		System.out.println();
-		System.out.println("相关资源包括：");
+		System.out.println("Related resources：");
 		for(int i = 0; i < cr[0].length; i ++){
 			if(cr[k][i] > 0.7){
 				System.out.print(s3[i*2] + " ");
 			}
 		}
 		System.out.println();
-		System.out.println("相关用户包括：");
+		System.out.println("Related users：");
 		for(int i = 0; i < cu[0].length; i ++){
 			if(cu[k][i] > 0.7){
 				System.out.print(s4[i*2] + " ");

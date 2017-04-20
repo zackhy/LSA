@@ -6,12 +6,7 @@ import com.priv.thesis.file.*;
 import com.priv.thesis.file.*;
 import Jama.Matrix;
 import Jama.SingularValueDecomposition;
-/**
- * Print the matrix to the output stream
- * @param 1 Column width.
- * @param 2 Number of digits after the decimal. 
- * m.print(0,5)
- */
+
 public class SvdDecompositions {
 	
 	private WeightCaculator wc = null;
@@ -28,7 +23,7 @@ public class SvdDecompositions {
 		gw = wc.globalWeight(pw, tw, dw);
 	}
 	
-	//奇异值分解，使用JAMA包,方便许多
+	// Singular Value Decomposition
 	public SingularValueDecomposition svdCaculator(){
 		System.out.println("***开始进行奇异值分解***");
 		Matrix m =new Matrix(gw);
@@ -39,25 +34,25 @@ public class SvdDecompositions {
 		return svd;
 	}
 	
-	//得到左奇异向量U
+	// Left-singular vectors
 	public Matrix getLeft(SingularValueDecomposition svd){
 		Matrix U = svd.getU();
 		return U;
 	}
 	
-	//得到右奇异向量V
+	// Right-singular vectors
 	public Matrix getRight(SingularValueDecomposition svd){
 		Matrix V = svd.getV();
 		return V;
 	}
 	
-	//得到奇异值Sigma
+	// Singular value
 	public Matrix getSigma(SingularValueDecomposition svd){
 		Matrix S = svd.getS();
 		return S;
 	}
 	
-	//得到k
+	// K value
 	public int getK(Matrix Sigma){
 		double[][] sigma = Sigma.getArrayCopy();
 		int k = 0;
@@ -72,7 +67,7 @@ public class SvdDecompositions {
 		return k;
 	}
 	
-	//得到k阶奇异值向量
+	// K-order singular vectors
 	public Matrix getSk(int k, Matrix Sigma){
 		double[][] sigma = Sigma.getArrayCopy();
 		double[][] sk = new double[k][k];
@@ -85,7 +80,7 @@ public class SvdDecompositions {
 		return Sk;
 	}
 	
-	//得到k阶右奇异值向量
+	// K-order left-singular vectors
 	public Matrix getVk(int k, Matrix V){
 		double[][] v = V.getArrayCopy();
 		double[][] vk = new double[k][v.length]; 
@@ -98,7 +93,7 @@ public class SvdDecompositions {
 		return Vk;
 	}
 	
-	//得到k阶左奇异值向量
+	// K-order right-singular vectors
 		public Matrix getUk(int k, Matrix U){
 			double[][] u = U.getArrayCopy();
 			double[][] uk = new double[u.length][k]; 
@@ -112,37 +107,13 @@ public class SvdDecompositions {
 		}
 	
 	
-	//得到Mk阶近似矩阵，即LSA潜在语义空间	
+	// Latent semantic space
 	public Matrix getSemanticSpace(Matrix Uk, Matrix Sk, Matrix Vk){
-		System.out.println("***开始构建语义空间***");
+		System.out.println("***Building latent semantic space***");
 		Matrix Mk = Uk.times(Sk).times(Vk);//k阶近似矩阵，即语义空间
-		System.out.println("***语义空间构建成功***");
+		System.out.println("***Latent semantic space built***");
 		System.out.println();
 		return Mk;
 	}
-	
-	//测试以上方法
-//	public static void main(String[] args) throws Exception{
-//		File file = new File("data/total_tags.txt");
-//		File file1 = new File("data/resources_tags.txt");
-//		TXTFileUtil tfu = new TXTFileUtil("data/test1.xls");
-//		String s = tfu.readTxtFile(file);
-//		String s1 = tfu.readTxtFile(file1);
-//		SvdDecompositions sd = new SvdDecompositions("data/test1.xls", s, s1);
-//		SingularValueDecomposition svd = sd.svdCaculator();
-//		Matrix U = sd.getLeft(svd);
-//		Matrix Sigma = sd.getSigma(svd
-//		Matrix V = sd.getRight(svd);
-//		int k = sd.getK(Sigma);
-//		Matrix Uk = sd.getUk(k, U);
-////		Uk.print(0,5);
-////		System.out.println(Uk.get(1, 1));
-//		Matrix Sk = sd.getSk(k, Sigma);
-////		Sk.print(0, 5);
-//		Matrix Vk = sd.getVk(k, V);
-////		Vk.print(0, 5);
-//		Matrix m = sd.getSemanticSpace(Uk, Sk, Vk);
-////		m.print(0, 5);
-//	}
 
 }
